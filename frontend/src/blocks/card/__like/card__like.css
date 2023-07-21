@@ -1,0 +1,34 @@
+.card__like {
+  background-image: url('../../../images/like_disabled.svg');
+  width: 22px;
+  height: 19px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-size: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 15px;
+  align-items: center;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  padding: 0;
+}
+
+.card__like:hover {
+  opacity: .5;
+}
+
+.card__like:active {
+  opacity: 1;
+  background-image: url('../../../images/like_active.svg');
+}
+
+@media screen and (max-width: 980px) {
+  .card__like {
+    margin-top: 0;
+    align-self: center;
+  }
+}
