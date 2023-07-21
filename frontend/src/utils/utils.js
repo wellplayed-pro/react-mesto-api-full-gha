@@ -9,11 +9,11 @@ const validationSettings = {
   errorClass: "popup__error_visible",
 };
 
-const apiConfig = {
-  url: "https://mesto.nomoreparties.co/v1/cohort-64",
-  headers: {
-    "Content-Type": "application/json",
-    authorization: "45bc93fa-1246-4164-bef4-758a1c17ad4b",
+const apiConfig =  {
+  url: 'http://localhost:3000/',
+  headers:{
+    'Content-Type': "application/json",
   },
+  credentials: 'include'
 };
 export { apiConfig, validationSettings };

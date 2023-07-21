@@ -1,10 +1,6 @@
-import { apiConfig } from "./utils";
-
 class Api {
-  constructor(config) {
-    this._url = config.url;
-    this._headers = config.headers;
-    this._authorization = config.headers["authorization"];
+  constructor({baseUrl}) {
+    this._baseUrl = baseUrl;
   }
 
   //Проверка на валидность ответа
@@ -20,18 +16,18 @@ class Api {
   }
   //Запрос карточек с сервера
   getInitialCards() {
-    return fetch(`${this._url}/cards`, {
-      headers: {
-        authorization: this._authorization,
-      },
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => this._checkResponse(res));
   }
 
   //Добавление новой карточки на сервер
   addNewCard(data) {
-    return fetch(`${this._url}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: data.title,
         link: data.link,
@@ -41,10 +37,9 @@ class Api {
 
   //Получение данных пользователя с сервера
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
-      headers: {
-        authorization: this._authorization,
-      },
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      credentials: this._credentials,
     })
       .then((res) => this._checkResponse(res))
       .catch(this._handleError);
@@ -52,9 +47,10 @@ class Api {
 
   // Передачи данных пользователя с сервера
   setUserInfoApi(data) {
-    return fetch(`${this._url}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -63,9 +59,10 @@ class Api {
   }
   //Передача на сервер нового аватара
   setUserAvatar(data) {
-    return fetch(`${this._url}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: this._credentials,
       body: JSON.stringify({
         avatar: data.avatar,
       }),
@@ -74,25 +71,28 @@ class Api {
 
   //Удаление карточки с сервера
   deleteCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
+      credentials: this._credentials,
     }).then((res) => this._checkResponse(res));
   }
 
   changeLikeStatus(cardId, isLiked) {
     if (isLiked) {
-      return fetch(`${this._url}/cards/${cardId}/likes`, {
+      return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: "DELETE",
         headers: this._headers,
+        credentials: this._credentials,
       }).then((res) => this._checkResponse(res));
     } else {
-      return fetch(`${this._url}/cards/${cardId}/likes`, {
+      return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: "PUT",
         headers: this._headers,
+        credentials: this._credentials,
       }).then((res) => this._checkResponse(res));
     }
   }
 }
 
-export const api = new Api(apiConfig);
+export const api = new Api({baseUrl: 'http://localhost:3000/'});

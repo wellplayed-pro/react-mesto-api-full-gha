@@ -128,23 +128,18 @@ function App() {
     setIsInfoTooltipPopupOpen(true);
   }
 
-  function checkToken() {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      auth
-        .getContent(jwt)
-        .then((res) => {
-          setLoggedIn(true);
-          setEmail(res.data.email);
-          navigate("/");
-        })
-        .catch((err) => alert(err));
-    }
-  }
-
-  useEffect(() => {
-    checkToken();
-  }, []);
+    useEffect(() => {
+      if (localStorage.getItem('jwt')) {
+        const jwt = localStorage.getItem('jwt');
+        auth.getContent(jwt)
+          .then((res) => {
+            setLoggedIn(true);
+            setEmail(res.user.email);
+            navigate("/", {replace: true});
+          })
+          .catch(err => console.log(err));
+      }
+    }, [navigate]);
 
   //auth
   function handleLogin(password, email) {
