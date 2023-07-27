@@ -8,10 +8,9 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some((card) => card._id === currentUser._id);
-  const cardLikeButtonClassName = `card__like ${
-    isLiked && "card__like_active"
-  }`;
+  const isLiked = card.likes.some((like) => like === currentUser._id);
+  const cardLikeButtonClassName = `card__like ${isLiked && "card__like_active"
+    }`;
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

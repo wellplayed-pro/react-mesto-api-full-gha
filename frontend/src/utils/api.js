@@ -2,6 +2,8 @@ import { API_URL } from "./config"
 class Api {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
+    this._credentials = "include";
+    this._headers = { 'Content-Type': 'application/json;charset=utf-8' };
   }
 
   //Проверка на валидность ответа
