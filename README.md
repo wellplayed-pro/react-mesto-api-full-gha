@@ -7,7 +7,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.112.101
+IP <51.250.95.233>
 
 Frontend https://ambernet15pr.nomoredomains.xyz
 
