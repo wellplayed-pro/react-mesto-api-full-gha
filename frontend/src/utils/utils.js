@@ -1,5 +1,7 @@
 /** Валидация */
 
+import { API_URL } from "./config"
+
 const validationSettings = {
   formSelector: ".form-popup",
   inputSelector: ".popup__input",
@@ -9,9 +11,9 @@ const validationSettings = {
   errorClass: "popup__error_visible",
 };
 
-const apiConfig =  {
-  url: 'http://localhost:3000/',
-  headers:{
+const apiConfig = {
+  url: API_URL,
+  headers: {
     'Content-Type': "application/json",
   },
   credentials: 'include'

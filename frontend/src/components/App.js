@@ -128,23 +128,23 @@ function App() {
     setIsInfoTooltipPopupOpen(true);
   }
 
-    useEffect(() => {
-      if (localStorage.getItem('jwt')) {
-        const jwt = localStorage.getItem('jwt');
-        auth.getContent(jwt)
-          .then((res) => {
-            setLoggedIn(true);
-            setEmail(res.user.email);
-            navigate("/", {replace: true});
-          })
-          .catch(err => console.log(err));
-      }
-    }, [navigate]);
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) {
+      const jwt = localStorage.getItem('jwt');
+      auth.getContent(jwt)
+        .then((res) => {
+          setLoggedIn(true);
+          setEmail(res.user.email);
+          navigate("/", { replace: true });
+        })
+        .catch(err => console.log(err));
+    }
+  }, [navigate]);
 
   //auth
   function handleLogin(password, email) {
     auth
-      .authorization(password, email)
+      .authorization({ password, email })
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setLoggedIn(true);
@@ -159,7 +159,7 @@ function App() {
 
   function handleRegister(password, email) {
     auth
-      .register(password, email)
+      .register({ password, email })
       .then(() => {
         navigate("/sign_in");
         onRegister();

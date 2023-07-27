@@ -1,5 +1,6 @@
+import { API_URL } from "./config"
 class Api {
-  constructor({baseUrl}) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
   }
 
@@ -95,4 +96,4 @@ class Api {
   }
 }
 
-export const api = new Api({baseUrl: 'http://localhost:3000/'});
+export const api = new Api({ baseUrl: API_URL });
