@@ -134,7 +134,7 @@ function App() {
       auth.getContent(jwt)
         .then((res) => {
           setLoggedIn(true);
-          setEmail(res.user.email);
+          setEmail(res.email);
           navigate("/", { replace: true });
         })
         .catch(err => console.log(err));

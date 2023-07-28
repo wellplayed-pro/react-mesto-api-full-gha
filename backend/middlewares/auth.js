@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const ErrorAuth = require('../errors/errorAuth');
+const { SECRET_STRING } = require('../utils/config');
 
 const auth = (req, res, next) => {
   let token;
@@ -11,7 +12,7 @@ const auth = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'SuperMegaS3cr3t');
+    payload = jwt.verify(token, SECRET_STRING);
   } catch (err) {
     throw new ErrorAuth('Необходимо авторизоваться');
   }

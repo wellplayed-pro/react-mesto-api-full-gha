@@ -8,6 +8,7 @@ const ErrorValidation = require('../errors/errorValidation');
 const ErrorDefault = require('../errors/errorDefault');
 const ErrorNotFound = require('../errors/errorNotFound');
 const { ERROR_VALIDATION, ERROR_DEFAULT } = require('../errors/typical_errors');
+const { SECRET_STRING } = require('../utils/config');
 
 const createUser = (req, res, next) => {
   const {
@@ -88,7 +89,7 @@ const login = (req, res, next) => {
       bcrypt.compare(password, user.password)
         .then((isValidUser) => {
           if (isValidUser) {
-            const jwt = jsonWebToken.sign({ _id: user._id }, 'SuperMegaS3cr3t');
+            const jwt = jsonWebToken.sign({ _id: user._id }, SECRET_STRING);
             res.cookie('jwt', jwt, {
               maxAge: 36000000,
               httpOnly: true,

@@ -3,29 +3,40 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const router = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { PORT, MONGO_DB } = require('./utils/constant');
+const { SERVER_PORT, DB } = require('./utils/config');
 
 const app = express();
 app.use(express.json());
 app.use(requestLogger);
 app.use(cookieParser());
+app.use(helmet());
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
 
 app.use(cors({
   origin: ['http://localhost:3000', 'https://ambernet15pr.nomoredomains.xyz', 'http://ambernet15pr.nomoredomains.xyz'],
   credentials: true,
 }));
 
-mongoose.connect(MONGO_DB);
+mongoose.connect(DB);
 
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorsHandler);
 
-app.listen(PORT, () => {
-  console.log(`Сервер запущен! Порт: ${PORT}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`Сервер запущен! Порт: ${SERVER_PORT}`);
 });
